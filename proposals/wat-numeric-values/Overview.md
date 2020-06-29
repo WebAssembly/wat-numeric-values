@@ -29,7 +29,21 @@
 
 ## Motivation
 
-TODO
+* Writing arbritary numeric values (integers and floats) to data segments is not easy.
+We need to encode the data, add escape characters `\`, and write it as strings.
+
+    For example, the following snippet tries to write some float values to a data segments.
+
+    ```wat
+    (data (i32.const 0)
+        "\00\00\c8\42"
+        "\00\00\80\3f"
+        "\00\00\00\00"
+    )
+    ```
+
+    And if we review the numbers, we cannot easily see the values without decoding it.
+    `"\00\00\c8\42"` => `0x42c80000` => `100.0`
 
 ## Overview
 
