@@ -32,7 +32,7 @@ For example:
 
 ## Motivation
 
-* Writing arbritary numeric values (integers and floats) to data segments is not easy.
+* Writing arbritary numeric values (integers and floats) to data segments is not simple.
 We need to encode the data, add escape characters `\`, and write it as strings.
 
     For example, the following snippet is meant to write some float values to a data segment.
@@ -45,21 +45,15 @@ We need to encode the data, add escape characters `\`, and write it as strings.
     )
     ```
 
-* If we want to review the numbers above, we cannot easily see the values without decoding it.
+* If we ever need to review the numbers above, we cannot easily see the values without decoding it.
 
     `"\00\00\c8\42"` => `0x42c80000` => `100.0`
 
-    It wouldn't be a problem if we are allowed to write the float values directly, for example:
-
-    ```wat
-    (data (i32.const 0)
-        (f32 100.0 1.0 0.5)
-    )
-    ```
-
 ## Overview
 
-### Grammar Update
+This proposal suggests a slight modification in the text format specification to accommodate writing numeric values in data segments.
+
+### Text Format Spec Changes
 
 The data value in data segments should accept both strings and list of numbers (numvec).
 
@@ -82,7 +76,7 @@ numvec ::= '(' 'i8'  i8* ')'
         | '(' 'f64' f64* ')'
 ```
 
-This data value form should also be available in the inline data segment in the memory module.
+This new data value form should also be available in the inline data segment in the memory module.
 
 ```ebnf
 mem ::= '(' 'memory' id '(' 'data' dataval* ')' ')'
@@ -116,7 +110,7 @@ mem ::= '(' 'memory' id '(' 'data' dataval* ')' ')'
 ### Execution
 
 The conversion of numvec to data in data segments happens during the wat2wasm compilation. 
-Which means there is no change needed in the binary format spec or the structure spec.
+Which means there is no change needed in the binary format, execution spec, or the structure spec.
 
 So, the following two snippents:
 
@@ -161,7 +155,7 @@ will output the same binary code:
 
 The encoding should use two's complement for integers and IEEE754 for float, which is similar to the `t.store` memory instructions.
 
-This encoding is used to make sure that when we load the value from memory using the `load` memory instructions, the value will be consistant whether the data was stored by using `(data ... )` initialization or `t.store` instructions.
+This encoding is used to ensure that when we load the value from memory using the `load` memory instructions, the value will be consistent whether the data was stored by using `(data ... )` initialization or `t.store` instructions.
 
 #### Data Alignment
 
@@ -190,7 +184,7 @@ Out of range values should throw error during wat2wasm compilation.
 )
 ```
 
-#### wasm2wat translation
+#### wasm2wat Translation
 
 The data segments in the compiled binary do not contain any information about their original form in WAT state.
 Therefore, the translation from the binary format back to the text format will use the default string form.
