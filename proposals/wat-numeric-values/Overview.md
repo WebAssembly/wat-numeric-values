@@ -198,3 +198,11 @@ Therefore, the translation from the binary format back to the text format will u
 ### Backward Compatibility
 
 As the proposed grammar still accepts the string form, all existing WAT codes should work fine.
+
+## Links
+
+* Initial design issue discussion: https://github.com/WebAssembly/design/issues/1348
+
+* First presentation in CG meeting: https://github.com/WebAssembly/meetings/blob/master/main/2020/CG-06-09.md
+
+* Poll on advancing to phase 1: https://github.com/WebAssembly/meetings/blob/master/main/2020/CG-06-23.md
