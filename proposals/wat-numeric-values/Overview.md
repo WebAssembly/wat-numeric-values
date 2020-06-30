@@ -28,7 +28,9 @@ For example:
     )
     ```
 
-* **Prototype:** https://wasmprop-numerical-data.netlify.app/wat2wasm/
+* **Live Prototype:** https://wasmprop-numerical-data.netlify.app/wat2wasm/
+
+    ([prototype repo](https://github.com/echamudi/wabt-wat-numeric-values/tree/patch-wat-numeric-values))
 
 ## Motivation
 
