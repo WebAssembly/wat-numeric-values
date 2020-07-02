@@ -113,10 +113,9 @@ This new data value form should also be available in the inline data segment in 
 (memory (data (i8 1 2 3 4)))
 ```
 
-### Execution
+### Execution Result Example
 
-The conversion of numvec to data in data segments happens during the text format to binary format compilation. 
-Which means there is no change needed in the binary format spec, execution spec, or the structure spec.
+The conversion of numvecs to data in data segments happens during the text format to binary format compilation. 
 
 So, the following two snippents:
 
@@ -157,11 +156,11 @@ will output the same binary code:
 ...
 ```
 
+### Additional Information
+
 #### Encoding
 
-The encoding should use two's complement for integers and IEEE754 for float, which is similar to the `t.store` memory instructions.
-
-This encoding is used to ensure that when we load the value from memory using the `load` memory instructions, the value will be consistent whether the data was stored by using `(data ... )` initialization or `t.store` instructions.
+The encoding of numbers inside numvecs is two's complement for integers and IEEE754 for float, which is similar to the `t.store` memory instructions. This encoding is used to ensure that when we load the value from memory using the `load` memory instructions, the value will be consistent whether the data was stored by using `(data ... )` initialization or `t.store` instructions.
 
 #### Data Alignment
 
@@ -195,7 +194,7 @@ Out of range values should throw error during text format to binary format compi
 The data segments in the compiled binary do not contain any information about their original form in WAT state.
 Therefore, the translation from the binary format back to the text format will use the default string form.
 
-### Backward Compatibility
+#### Backward Compatibility
 
 As the proposed grammar still accepts the string form, all existing WAT codes should work fine.
 
