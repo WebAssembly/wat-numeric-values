@@ -69,9 +69,9 @@ datavalelem ::= b*:<a href="https://webassembly.github.io/spec/core/text/values.
              |  b*:<a href="https://github.com/WebAssembly/wat-numeric-values/blob/master/proposals/wat-numeric-values/Overview.md#text-format-spec-changes">numvec</a>           => b*
 </pre>
 
-Numvecs denote sequences of bytes. They are enclosed in parentheses, starts with a keyword to identify the type of the numbers, and followed by the list of numbers.
+Numvecs denote sequences of bytes. They are enclosed in parentheses, start with a keyword to identify the type of the numbers, and followed by a list of numbers.
 
-The numbers inside numvecs are converted to the respective representation in bytes, and then concatenated into consecutive bytes.
+The numbers inside numvecs represent their byte sequence using the respective encoding. They are encoded using two's complement encoding for integers and IEEE754 encoding for float values. Each numvec symbol represents the concatenation of the bytes of those numbers.
 
 <pre>
 numvec ::= ‘(’ ‘i8’  (n:<a href="https://webassembly.github.io/spec/core/text/values.html#text-int">i8</a>)*  ‘)’      => <a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((<a href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-bytes">bytes</a><sub>i8</sub>(n))*)    (if |<a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((<a href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-bytes">bytes</a><sub>i8</sub>(n))*) | < 2<sup>32</sup>)
@@ -161,7 +161,7 @@ will output the same binary code:
 
 #### Encoding
 
-The encoding of numbers inside numvecs is two's complement for integers and IEEE754 for float, which is similar to the `t.store` memory instructions. This encoding is used to ensure that when we load the value from memory using the `load` memory instructions, the value will be consistent whether the data was stored by using `(data ... )` initialization or `t.store` instructions.
+As previously described, the encoding of numbers inside numvecs is two's complement for integers and IEEE754 for float, which is similar to the `t.store` memory instructions. This encoding is used to ensure that when we load the value from memory using the `load` memory instructions, the value will be consistent whether the data was stored by using `(data ... )` initialization or `t.store` instructions.
 
 #### Data Alignment
 
