@@ -161,7 +161,7 @@ will output the same binary code:
 
 #### Encoding
 
-The encoding of numbers inside numvecs is two's complement for integers and IEEE754 for float, which is similar to the `t.store` memory instructions. This encoding is used to ensure that when we load the value from memory using the `load` memory instructions, the value will be consistent whether the data was stored by using `(data ... )` initialization or `t.store` instructions.
+As previously described, the encoding of numbers inside numvecs is two's complement for integers and IEEE754 for float, which is similar to the `t.store` memory instructions. This encoding is used to ensure that when we load the value from memory using the `load` memory instructions, the value will be consistent whether the data was stored by using `(data ... )` initialization or `t.store` instructions.
 
 #### Data Alignment
 
