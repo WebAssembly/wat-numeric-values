@@ -111,8 +111,8 @@ mem ::= '(' 'memory' id '(' 'data' dataval* ')' ')'
 
 ### Execution
 
-The conversion of numvec to data in data segments happens during the wat2wasm compilation. 
-Which means there is no change needed in the binary format, execution spec, or the structure spec.
+The conversion of numvec to data in data segments happens during the text format to binary format compilation. 
+Which means there is no change needed in the binary format spec, execution spec, or the structure spec.
 
 So, the following two snippents:
 
@@ -176,7 +176,7 @@ compiles to: `0102 00`
 
 #### Out of Range Values
 
-Out of range values should throw error during wat2wasm compilation.
+Out of range values should throw error during text format to binary format compilation.
 
 ```wat
 (memory 1)
@@ -186,7 +186,7 @@ Out of range values should throw error during wat2wasm compilation.
 )
 ```
 
-#### wasm2wat Translation
+#### Binary Format to Text Format Translation
 
 The data segments in the compiled binary do not contain any information about their original form in WAT state.
 Therefore, the translation from the binary format back to the text format will use the default string form.
