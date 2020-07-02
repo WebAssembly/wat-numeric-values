@@ -120,7 +120,7 @@ So, the following two snippents:
 ...
 (memory 1)
 (data (offset (i32.const 0))
-  "abc"
+  "abcd"
   (i16 -1)
   (f32 62.5)
 )
@@ -130,7 +130,7 @@ So, the following two snippents:
 ...
 (memory 1)
 (data (offset (i32.const 0))
-  "abc"
+  "abcd"
   "\FF\FF"
   "\00\00\7a\42"
 )
@@ -144,7 +144,7 @@ will output the same binary code:
 ; data segment header 0
 0000010: 00                                        ; segment flags
 0000011: 41                                        ; i32.const
-0000012: 12                                        ; i32 literal
+0000012: 00                                        ; i32 literal
 0000013: 0b                                        ; end
 0000014: 0a                                        ; data segment size
 ; data segment data 0
