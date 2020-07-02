@@ -111,8 +111,8 @@ mem ::= '(' 'memory' id '(' 'data' dataval* ')' ')'
 
 ### Execution
 
-The conversion of numvec to data in data segments happens during the wat2wasm compilation. 
-Which means there is no change needed in the binary format, execution spec, or the structure spec.
+The conversion of numvec to data in data segments happens during the text format to binary format compilation. 
+Which means there is no change needed in the binary format spec, execution spec, or the structure spec.
 
 So, the following two snippents:
 
@@ -120,7 +120,7 @@ So, the following two snippents:
 ...
 (memory 1)
 (data (offset (i32.const 0))
-  "abc"
+  "abcd"
   (i16 -1)
   (f32 62.5)
 )
@@ -130,7 +130,7 @@ So, the following two snippents:
 ...
 (memory 1)
 (data (offset (i32.const 0))
-  "abc"
+  "abcd"
   "\FF\FF"
   "\00\00\7a\42"
 )
@@ -144,7 +144,7 @@ will output the same binary code:
 ; data segment header 0
 0000010: 00                                        ; segment flags
 0000011: 41                                        ; i32.const
-0000012: 12                                        ; i32 literal
+0000012: 00                                        ; i32 literal
 0000013: 0b                                        ; end
 0000014: 0a                                        ; data segment size
 ; data segment data 0
@@ -176,7 +176,7 @@ compiles to: `0102 00`
 
 #### Out of Range Values
 
-Out of range values should throw error during wat2wasm compilation.
+Out of range values should throw error during text format to binary format compilation.
 
 ```wat
 (memory 1)
@@ -186,7 +186,7 @@ Out of range values should throw error during wat2wasm compilation.
 )
 ```
 
-#### wasm2wat Translation
+#### Binary Format to Text Format Translation
 
 The data segments in the compiled binary do not contain any information about their original form in WAT state.
 Therefore, the translation from the binary format back to the text format will use the default string form.
