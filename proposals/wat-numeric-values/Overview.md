@@ -87,6 +87,7 @@ This new data value form should also be available in the inline data segment in 
 <pre>
 ‘(’ ‘memory’ <a href="https://webassembly.github.io/spec/core/text/values.html#text-id">id</a><sup>?</sup> ‘(’ ‘data’ b<sup>n</sup>:<a href="https://github.com/WebAssembly/wat-numeric-values/blob/master/proposals/wat-numeric-values/Overview.md#text-format-spec-changes">dataval</a> ‘)’ ‘)’ ≡
     ‘(’ ‘memory’ <a href="https://webassembly.github.io/spec/core/text/values.html#text-id">id</a>' m m ‘)’ ‘(’ ‘data’ <a href="https://webassembly.github.io/spec/core/text/values.html#text-id">id</a>' ‘(’ ‘i32.const’ ‘0’ <a href="https://github.com/WebAssembly/wat-numeric-values/blob/master/proposals/wat-numeric-values/Overview.md#text-format-spec-changes">dataval</a> ‘)’
+        (if <a href="https://webassembly.github.io/spec/core/text/values.html#text-id">id</a>'=<a href="https://webassembly.github.io/spec/core/text/values.html#text-id">id</a><sup>?</sup> ≠ 𝜖 ∨ <a href="https://webassembly.github.io/spec/core/text/values.html#text-id">id</a>' <a href="https://webassembly.github.io/spec/core/text/values.html#text-id-fresh">fresh</a>, m=ceil(n/64Ki))
 </pre>
 
 ### Usage Example
