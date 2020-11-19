@@ -53,6 +53,34 @@ We need to encode the data, add escape characters `\`, and write it as strings.
 
     `"\00\00\c8\42"` => `0x42c80000` => `100.0`
 
+* x86-64 GCC and x86-64 Clang have [assembler directives](https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_chapter/as_7.html) that can be used to save arbritary numbers to data segments.
+
+    Some of them are:
+
+    ```s
+    data:
+    .ascii  "abcd"         #; 61 62 63 64
+    .byte   1, 2, 3, 4     #; 01 02 03 04
+    .2byte  5, 6           #; 05 00 06 00
+    .4byte  0x89ABCDEF     #; EF CD AB 89
+    .8byte  -1             #; FF FF FF FF FF FF FF FF
+    .float  62.5           #; 00 00 7A 42
+    .double 62.5           #; 00 00 00 00 00 40 4F 40
+    ```
+
+    In NASM, there are [pseudo-instructions](http://www.tortall.net/projects/yasm/manual/html/nasm-pseudop.html), for example:
+
+    ```asm
+    data:
+    db          'abcd', 0x01, 2, 3, 4   ; 61 62 63 64 01 02 03 04
+    dw          5, 6                    ; 05 00 06 00
+    dd          62.5                    ; 00 00 7A 42
+    dq          62.5                    ; 00 00 00 00 00 40 4F 40
+    times 4 db  0xAB                    ; AB AB AB AB
+    ```
+
+    Those directives help programmers to write and see the data in the code directly in human readable format rather than the encoded format. This proposal proposes similar functionalities to WebAssembly Text Format.
+
 ## Overview
 
 This proposal suggests a slight modification in the text format specification to accommodate writing numeric values in data segments.
