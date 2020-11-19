@@ -30,7 +30,9 @@ For example:
 
 * **Live Prototype:** https://wasmprop-numerical-data.netlify.app/wat2wasm/
 
-    ([prototype repo](https://github.com/echamudi/wabt-wat-numeric-values/tree/patch-wat-numeric-values))
+* Compilers that have implemented this proposal:
+
+    - [wasp](https://github.com/WebAssembly/wasp) (use `--enable-numeric-values` flag)
 
 ## Motivation
 
