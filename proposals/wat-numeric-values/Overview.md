@@ -92,6 +92,20 @@ This new data value form should also be available in the inline data segment in 
         (if <a href="https://webassembly.github.io/spec/core/text/values.html#text-id">id</a>'=<a href="https://webassembly.github.io/spec/core/text/values.html#text-id">id</a><sup>?</sup> ≠ 𝜖 ∨ <a href="https://webassembly.github.io/spec/core/text/values.html#text-id">id</a>' <a href="https://webassembly.github.io/spec/core/text/values.html#text-id-fresh">fresh</a>, m=ceil(n/64Ki))
 </pre>
 
+#### SIMD v128
+
+The SIMD proposal introduces [v128 value type](https://github.com/WebAssembly/simd/blob/master/proposals/simd/SIMD.md#simd-value-type).
+When the SIMD feature is enabled, `datavalelem` should also accept a list of `v128` value type.
+
+<pre>
+datavalelem ::= b*:<a href="https://webassembly.github.io/spec/core/text/values.html#text-string">string</a>           => b*
+             |  b*:<a href="https://github.com/WebAssembly/wat-numeric-values/blob/master/proposals/wat-numeric-values/Overview.md#text-format-spec-changes">numvec</a>           => b*
+             |  b*:v128list         => b*
+
+v128list ::= ‘(’ ‘v128’ (<a href="https://github.com/WebAssembly/simd/blob/master/proposals/simd/TextSIMD.md">v128 constant text format</a>)* ‘)’
+</pre>
+
+
 ### Usage Example
 
 ```wat
@@ -110,6 +124,14 @@ This new data value form should also be available in the inline data segment in 
 ;; PI
 (data (offset (i32.const 0x200))
     (f64 3.14159265358979323846264338327950288)
+)
+
+;; v128 list (SIMD)
+(data (offset (i32.const 0x200))
+    (v128
+        i32x4 0 0 0 0
+        f64x2 1.0 1.5
+    )
 )
 
 ;; Inline in memory module
