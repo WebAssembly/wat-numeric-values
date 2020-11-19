@@ -59,7 +59,7 @@ This proposal suggests a slight modification in the text format specification to
 
 ### Text Format Spec Changes
 
-The data value in data segments should accept both strings and list of numbers (numvec).
+The data value in data segments should accept both strings and list of numbers (numlist).
 
 <pre>
 data<sub>I</sub> ::= ‘(’ ‘data’ x:<a href="https://webassembly.github.io/spec/core/text/modules.html#text-memidx">memidx</a><sub>I</sub> ‘(’ ‘offset’ e:<a href="https://webassembly.github.io/spec/core/text/instructions.html#text-expr">expr</a><sub>I</sub> ‘)’ b*:<a href="https://github.com/WebAssembly/wat-numeric-values/blob/master/proposals/wat-numeric-values/Overview.md#text-format-spec-changes">dataval</a> ‘)’
@@ -68,15 +68,15 @@ data<sub>I</sub> ::= ‘(’ ‘data’ x:<a href="https://webassembly.github.io
 dataval ::= (b*:<a href="https://github.com/WebAssembly/wat-numeric-values/blob/master/proposals/wat-numeric-values/Overview.md#text-format-spec-changes">datavalelem</a>)*       => <a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((b*)*)
 
 datavalelem ::= b*:<a href="https://webassembly.github.io/spec/core/text/values.html#text-string">string</a>           => b*
-             |  b*:<a href="https://github.com/WebAssembly/wat-numeric-values/blob/master/proposals/wat-numeric-values/Overview.md#text-format-spec-changes">numvec</a>           => b*
+             |  b*:<a href="https://github.com/WebAssembly/wat-numeric-values/blob/master/proposals/wat-numeric-values/Overview.md#text-format-spec-changes">numlist</a>           => b*
 </pre>
 
-Numvecs denote sequences of bytes. They are enclosed in parentheses, start with a keyword to identify the type of the numbers, and followed by a list of numbers.
+Numlists denote sequences of bytes. They are enclosed in parentheses, start with a keyword to identify the type of the numbers, and followed by a list of numbers.
 
-The numbers inside numvecs represent their byte sequence using the respective encoding. They are encoded using two's complement encoding for integers and IEEE754 encoding for float values. Each numvec symbol represents the concatenation of the bytes of those numbers.
+The numbers inside numlists represent their byte sequence using the respective encoding. They are encoded using two's complement encoding for integers and IEEE754 encoding for float values. Each numlist symbol represents the concatenation of the bytes of those numbers.
 
 <pre>
-numvec ::= ‘(’ ‘i8’  (n:<a href="https://webassembly.github.io/spec/core/text/values.html#text-int">i8</a>)*  ‘)’      => <a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((<a href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-bytes">bytes</a><sub>i8</sub>(n))*)    (if |<a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((<a href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-bytes">bytes</a><sub>i8</sub>(n))*) | < 2<sup>32</sup>)
+numlist ::= ‘(’ ‘i8’  (n:<a href="https://webassembly.github.io/spec/core/text/values.html#text-int">i8</a>)*  ‘)’      => <a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((<a href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-bytes">bytes</a><sub>i8</sub>(n))*)    (if |<a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((<a href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-bytes">bytes</a><sub>i8</sub>(n))*) | < 2<sup>32</sup>)
         |  ‘(’ ‘i16’ (n:<a href="https://webassembly.github.io/spec/core/text/values.html#text-int">i16</a>)* ‘)’      => <a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((<a href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-bytes">bytes</a><sub>i16</sub>(n))*)   (if |<a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((<a href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-bytes">bytes</a><sub>i16</sub>(n))*)| < 2<sup>32</sup>)
         |  ‘(’ ‘i32’ (n:<a href="https://webassembly.github.io/spec/core/text/values.html#text-int">i32</a>)* ‘)’      => <a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((<a href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-bytes">bytes</a><sub>i32</sub>(n))*)   (if |<a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((<a href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-bytes">bytes</a><sub>i32</sub>(n))*)| < 2<sup>32</sup>)
         |  ‘(’ ‘i64’ (n:<a href="https://webassembly.github.io/spec/core/text/values.html#text-int">i64</a>)* ‘)’      => <a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((<a href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-bytes">bytes</a><sub>i64</sub>(n))*)   (if |<a href="https://webassembly.github.io/spec/core/syntax/conventions.html#notation-concat">concat</a>((<a href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-bytes">bytes</a><sub>i64</sub>(n))*)| < 2<sup>32</sup>)
@@ -99,7 +99,7 @@ When the SIMD feature is enabled, `datavalelem` should also accept a list of `v1
 
 <pre>
 datavalelem ::= b*:<a href="https://webassembly.github.io/spec/core/text/values.html#text-string">string</a>           => b*
-             |  b*:<a href="https://github.com/WebAssembly/wat-numeric-values/blob/master/proposals/wat-numeric-values/Overview.md#text-format-spec-changes">numvec</a>           => b*
+             |  b*:<a href="https://github.com/WebAssembly/wat-numeric-values/blob/master/proposals/wat-numeric-values/Overview.md#text-format-spec-changes">numlist</a>           => b*
              |  b*:v128list         => b*
 
 v128list ::= ‘(’ ‘v128’ (<a href="https://github.com/WebAssembly/simd/blob/master/proposals/simd/TextSIMD.md">v128 constant text format</a>)* ‘)’
@@ -140,7 +140,7 @@ v128list ::= ‘(’ ‘v128’ (<a href="https://github.com/WebAssembly/simd/bl
 
 ### Execution Result Example
 
-The conversion of numvecs to data in data segments happens during the text format to binary format compilation. 
+The conversion of numlists to data in data segments happens during the text format to binary format compilation. 
 
 So, the following two snippents:
 
@@ -185,7 +185,7 @@ will output the same binary code:
 
 #### Encoding
 
-As previously described, the encoding of numbers inside numvecs is two's complement for integers and IEEE754 for float, which is similar to the `t.store` memory instructions. This encoding is used to ensure that when we load the value from memory using the `load` memory instructions, the value will be consistent whether the data was stored by using `(data ... )` initialization or `t.store` instructions.
+As previously described, the encoding of numbers inside numlists is two's complement for integers and IEEE754 for float, which is similar to the `t.store` memory instructions. This encoding is used to ensure that when we load the value from memory using the `load` memory instructions, the value will be consistent whether the data was stored by using `(data ... )` initialization or `t.store` instructions.
 
 #### Data Alignment
 
