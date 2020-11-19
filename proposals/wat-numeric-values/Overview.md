@@ -102,9 +102,10 @@ datavalelem ::= b*:<a href="https://webassembly.github.io/spec/core/text/values.
              |  b*:<a href="https://github.com/WebAssembly/wat-numeric-values/blob/master/proposals/wat-numeric-values/Overview.md#text-format-spec-changes">numlist</a>           => b*
              |  b*:v128list         => b*
 
-v128list ::= ‘(’ ‘v128’ (<a href="https://github.com/WebAssembly/simd/blob/master/proposals/simd/TextSIMD.md">v128 constant text format</a>)* ‘)’
+v128list ::= ‘(’ ‘v128’ (<i><a href="https://github.com/WebAssembly/simd/blob/master/proposals/simd/TextSIMD.md">v128 constant text format</a></i>)* ‘)’
 </pre>
 
+See the examples below for the usage.
 
 ### Usage Example
 
@@ -127,7 +128,7 @@ v128list ::= ‘(’ ‘v128’ (<a href="https://github.com/WebAssembly/simd/bl
 )
 
 ;; v128 list (SIMD)
-(data (offset (i32.const 0x200))
+(data (offset (i32.const 0x300))
     (v128
         i32x4 0 0 0 0
         f64x2 1.0 1.5
@@ -148,9 +149,9 @@ So, the following two snippents:
 ...
 (memory 1)
 (data (offset (i32.const 0))
-  "abcd"
-  (i16 -1)
-  (f32 62.5)
+    "abcd"
+    (i16 -1)
+    (f32 62.5)
 )
 ...
 ```
@@ -158,9 +159,9 @@ So, the following two snippents:
 ...
 (memory 1)
 (data (offset (i32.const 0))
-  "abcd"
-  "\FF\FF"
-  "\00\00\7a\42"
+    "abcd"
+    "\FF\FF"
+    "\00\00\7a\42"
 )
 ...
 ```
@@ -179,6 +180,30 @@ will output the same binary code:
 0000015: 6162 6364 ffff 0000 7a42                  ; data segment data
 000000e: 10                                        ; FIXUP section size
 ...
+```
+
+#### SIMD v128 Execution Example
+
+The following three snippets will output the same binary code:
+```wat
+(data (offset (i32.const 0x00))
+    (v128
+        i32x4 0xA 0xB 0xC 0xD
+        f64x2 1.0 0.5
+    )
+)
+```
+```wat
+(data (offset (i32.const 0x00))
+    (i32 0xA 0xB 0xC 0xD)
+    (f64 1.0 0.5)
+)
+```
+```wat
+(data (offset (i32.const 0x00))
+    "\0a\00\00\00\0b\00\00\00\0c\00\00\00\0d\00\00\00"
+    "\00\00\00\00\00\00\f0?\00\00\00\00\00\00\e0?"
+)
 ```
 
 ### Additional Information
