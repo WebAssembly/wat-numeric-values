@@ -33,6 +33,7 @@ For example:
 * Compilers that have implemented this proposal:
 
     - [wasp](https://github.com/WebAssembly/wasp) (use `--enable-numeric-values` flag)
+    - [Rust `wat`/`wast` crates](https://github.com/bytecodealliance/wasm-tools)
 
 ## Motivation
 
