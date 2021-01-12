@@ -284,3 +284,5 @@ As the proposed grammar still accepts the string form, all existing WAT codes sh
 * First presentation in CG meeting: https://github.com/WebAssembly/meetings/blob/master/main/2020/CG-06-09.md
 
 * Poll on advancing to phase 1: https://github.com/WebAssembly/meetings/blob/master/main/2020/CG-06-23.md
+
+* Poll on advancing to phase 2: https://github.com/WebAssembly/meetings/blob/master/main/2020/CG-11-24.md
